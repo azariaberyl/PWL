@@ -1,0 +1,44 @@
+body {
+  padding: 5px;
+  margin: 0px;
+}
+.menu {
+  background-color: azure;
+  border-radius: 5px;
+}
+.menu ul {
+  margin: 0 15px;
+  padding: 0;
+}
+.menu ul li {
+  list-style: none;
+  display: inline-block;
+  padding: 15px 25px;
+}
+.menu ul li:hover {
+  background-color: #fff;
+}
+.menu ul li a {
+  text-decoration: none;
+  color: black;
+}
+.space {
+  height: 50px;
+}
+.welcome {
+  text-align: center;
+  font-weight: bold;
+}
+table,
+th,
+td {
+  border: 1px solid black;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.img-mini {
+  max-width: 100px;
+  max-height: 100px;
+}
