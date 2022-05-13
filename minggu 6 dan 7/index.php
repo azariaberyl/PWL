@@ -1,6 +1,7 @@
 <?php
 include 'conn.php';
 include 'conf.php';
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +20,7 @@ include 'conf.php';
     </div>
     <div class="content"><div class="container">
         <?php
+        
         if(!is_null(get('p'))){
             switch (get('p')) {
             case 'home':
@@ -35,11 +37,21 @@ include 'conf.php';
                 case 'edit':
                     inc('tampilan/sekolah/edit');
                     break;
-                default:
+                    default:
                     inc('tampilan/sekolah/all');
                     break;
-            }
+                }
                 break;
+            case 'login':
+                if (isset($_SESSION["login"])){
+                    unset ($_SESSION);
+                    session_destroy();
+                    header("location:index.php");
+                    break;
+                } else {
+                    inc('../minggu 8/Latihan/login');
+                    break;
+                }
             default:
                 inc('home');
                 break;
