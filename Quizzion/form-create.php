@@ -1,3 +1,9 @@
+<?php
+include 'conf.php';
+// $
+if (isLogin()){
+// function 
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,11 +16,11 @@
   <body style="background-color: #f7f9fa">
     <nav style="background-color: white">
       <ul>
-        <li class="button1"><a href="index.html">Home/Logo</a></li>
-        <li class="button1"><a href="dashboard.html">Dashboard</a></li>
+        <li class="button1"><a href="index.php">Home/Logo</a></li>
+        <li class="button1"><a href="dashboard.php">Dashboard</a></li>
       </ul>
       <ul>
-        <li class="button1"><a href="">Login</a></li>
+        <li class="button1"><a href="logout.php">Logout</a></li>
       </ul>
     </nav>
 
@@ -27,7 +33,7 @@
           <input
             type="text"
             name="title"
-            id="title"
+            class="title"
             placeholder="Ketikan judul"
           />
           <!-- Question -->
@@ -36,12 +42,10 @@
               <a href="" class="button2">Delete</a>
             </div>
             <!-- Type Soal -->
-            <input type="hidden" name="type" id="type" value="radio" />
+            <!-- <input type="hidden" name="type" id="type" value="radio" /> -->
             <!-- Soal -->
-            <p>
-              Contoh pertanyaan, berikut ini yang bukan merupakan bahasa
-              pemrograman adalah
-            </p>
+            <input class="title" type="text" name="pertanyaan" value = "Contoh pertanyaan, berikut ini yang bukan merupakan bahasa
+              pemrograman adalah" placeholder="Masukan pertanyaan">
             <!-- Jawaban -->
             <div class="pilihan">
               <label for="1">A</label>
@@ -80,3 +84,8 @@
     </div>
   </body>
 </html>
+<?php
+} else {
+  echo "Anda belum login";
+}
+?>

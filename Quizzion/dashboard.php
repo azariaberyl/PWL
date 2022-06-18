@@ -1,12 +1,16 @@
 <?php
 include "conf.php";
 $login = $_SESSION["login"];
+$userTableDatas = [];
 if (isset($_SESSION["login"])){
-  $userTable = "{$_SESSION['login']['username']}{$_SESSION['login']['id']}";
-  if (!tableExists($conn, $userTable)){
-    // print_r($userTable);
-    createTable($conn, $userTable);
+  $userTablDatabase = "{$_SESSION['login']['username']}{$_SESSION['login']['id']}";
+  // print_r($userTablDatabase);
+  if (!tableExists($conn, $userTablDatabase)){
+    echo "Table telah dibuat";
+    createTableDatabase($conn, $userTablDatabase);
   }
+  $userTableDatas = getTable($conn, $userTablDatabase);
+  // print_r($userTableDatas);
 ?>
 
 <!DOCTYPE html>
@@ -37,19 +41,21 @@ if (isset($_SESSION["login"])){
       </div>
       <!-- Create room button -->
       <div class="end-container">
-        <a href="form-create.html" class="button2">Buat</a>
+        <a href="form-create.php" class="button2">Buat</a>
       </div>
       <!-- Table overview -->
-      <div id="table-overview">
-        <div>
-          <a href="" class="button2"> Edit</a>
-          <a href="" class="button2"> Hapus</a>
-        </div>
-        <div id="bottom">
-          <h3>Table Name</h3>
-          <h4>Participant</h4>
-        </div>
-      </div>
+      <?php
+      // echo "<div id='table-overview'>
+      //   <div>
+      //     <a href='' class='button2'> Edit</a>
+      //     <a href='' class='button2'> Hapus</a>
+      //   </div>
+      //   <div id='bottom'>
+      //     <h3>Table Name</h3>
+      //     <h4>Participant</h4>
+      //   </div>
+      // </div>"
+      ?>
     </div>
   </body>
 </html>

@@ -48,12 +48,10 @@ include "conf.php";
             </form>
           </div>
           <div id="header-right">
-            <h2 style="font-weight: 600">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis
-              amet iste vero laborum aliquid quae numquam rerum eum nostrum
-              veniam magni, facilis rem molestiae tenetur odio! Minus doloribus
-              quasi ipsum.
-            </h2>
+            <!-- <h2 style="font-weight: 600">
+              Buat pertanyaan <br>
+              survey ataupun sebuah quiz
+            </h2> -->
           </div>
         </div>
       </div>
