@@ -45,6 +45,7 @@ a {
 }
 .button2:hover {
   background-color: rgb(236, 250, 253);
+  cursor: pointer;
 }
 /* Align left button container */
 .end-container {
@@ -162,7 +163,6 @@ header {
   margin-bottom: 5px;
 }
 .question {
-  display: none;
   background-color: white;
   margin-bottom: 5px;
   border-radius: 5px;

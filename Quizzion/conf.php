@@ -10,6 +10,10 @@ function tableExists($pdo, $table) {
   $pdo = $pdoTemp;
   return $result !== FALSE;
 }
+// Mendapatkan kodeuser user+userId
+function getLogin(){
+  return "{$_SESSION['login']['username']}{$_SESSION['login']['id']}";
+}
 function get($item){
   return isset($item) ? htmlspecialchars($_GET[$item]) : null;
 }
@@ -44,13 +48,10 @@ function createTableDatabase($conn, $tableName){
 menambahkan field data ke tabel user (KP)
 data ini akan berada dalam TableDatabase / database berdasarkan username + id 
 */
-function insertTable($conn, $tableDatabase, $judul){
+function insertTable($conn, $tableDatabase, $judul, $kode){
   $connTemp = $conn;
   try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO $tableDatabase (`tableName`, `participant`) VALUES ($judul,'0')";
+    $sql = "INSERT INTO $tableDatabase (`judul`, `participant`, `kode`) VALUES (\"$judul\",0, \"$kode\")";
     // use exec() because no results are returned
     $conn->exec($sql);
     echo "New record created successfully";
@@ -65,7 +66,7 @@ function insertTable($conn, $tableDatabase, $judul){
 Mendapatkan field data tabel user (kumpulan pertanyaan)
 data ini berada dalam TableDatabase / database berdasarkan username + id
 */
-function getTable($conn, $tableDatabase){
+function getTableUser($conn, $tableDatabase){
   $connTemp = $conn;
   try {
     $stmt = $conn->prepare("SELECT * FROM $tableDatabase");
@@ -105,7 +106,42 @@ function delTable($conn, $tableDatabase, $id){
   database KP menyimpan semua pertanyaan2
   */
 }
+/* 
+Membuat tabel pertanyaan berasal dari kode
+tableName berasal dari kode
+*/
+function createTableP($conn, $tableName){
+  $connTemp = $conn;
+  try {
+  
+    // sql to create table
+    $sql = "CREATE TABLE $tableName (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    pertanyaan VARCHAR(255) NOT NULL,
+    optiona VARCHAR(255) NOT NULL,
+    optionb VARCHAR(255) NOT NULL,
+    optionc VARCHAR(255) NOT NULL,
+    optiond VARCHAR(255) NOT NULL
+    )";
+  
+    // use exec() because no results are returned
+    $conn->exec($sql);
+    echo "Table MyGuests created successfully";
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+  
+  $conn = $connTemp;
+}
+/* Menambahkan data ke TableP
+*/
+function insertTableP(
+  $conn, $pertanyaan, $optiona,$optionb,$optionc,$optiond){
 
+  $connTemp = $conn;
+  
+  $conn = $connTemp;
+}
 // check login
 function isLogin(){
   if (isset($_SESSION["login"])) {

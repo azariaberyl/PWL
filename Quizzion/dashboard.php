@@ -3,13 +3,13 @@ include "conf.php";
 $login = $_SESSION["login"];
 $userTableDatas = [];
 if (isset($_SESSION["login"])){
-  $userTablDatabase = "{$_SESSION['login']['username']}{$_SESSION['login']['id']}";
+  $userTablDatabase = getLogin();
   // print_r($userTablDatabase);
   if (!tableExists($conn, $userTablDatabase)){
     echo "Table telah dibuat";
     createTableDatabase($conn, $userTablDatabase);
   }
-  $userTableDatas = getTable($conn, $userTablDatabase);
+  $userTableDatas = getTableUser($conn, $userTablDatabase);
   // print_r($userTableDatas);
 ?>
 
@@ -51,7 +51,7 @@ if (isset($_SESSION["login"])){
       //     <a href='' class='button2'> Hapus</a>
       //   </div>
       //   <div id='bottom'>
-      //     <h3>Table Name</h3>
+      //     <h3>kode</h3>
       //     <h4>Participant</h4>
       //   </div>
       // </div>"
