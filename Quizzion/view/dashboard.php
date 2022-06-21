@@ -1,5 +1,5 @@
 <?php
-include "conf.php";
+include "../model/conf.php";
 $login = $_SESSION["login"];
 $userTableDatas = [];
 if (isset($_SESSION["login"])){
@@ -8,6 +8,8 @@ if (isset($_SESSION["login"])){
   if (!tableExists($conn, $userTablDatabase)){
     echo "Table telah dibuat";
     createTableDatabase($conn, $userTablDatabase);
+  } else {
+    $datas = getTableDatabase($conn, $userTablDatabase);
   }
   $userTableDatas = getTableUser($conn, $userTablDatabase);
   // print_r($userTableDatas);
@@ -19,17 +21,17 @@ if (isset($_SESSION["login"])){
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../style.css" />
     <title>Quizion</title>
   </head>
   <body style="background-color: #f7f9fa">
     <nav style="background-color: white">
       <ul>
-        <li class="button1"><a href="index.php">Home/Logo</a></li>
+        <li class="button1"><a href="../index.php">Home</a></li>
         <li class="button1"><a href="dashboard.php">Dashboard</a></li>
       </ul>
       <ul>
-        <li class="button1"><a href="logout.php">Logout</a></li>
+        <li class="button1"><a href="../controller/logout.php">Logout</a></li>
       </ul>
     </nav>
 
@@ -45,16 +47,19 @@ if (isset($_SESSION["login"])){
       </div>
       <!-- Table overview -->
       <?php
-      // echo "<div id='table-overview'>
-      //   <div>
-      //     <a href='' class='button2'> Edit</a>
-      //     <a href='' class='button2'> Hapus</a>
-      //   </div>
-      //   <div id='bottom'>
-      //     <h3>kode</h3>
-      //     <h4>Participant</h4>
-      //   </div>
-      // </div>"
+      foreach ($datas as $key => $value) {
+        echo "<div class='table-overview'>
+          <div>
+            <a href='' class='button2'> Edit</a>
+            <a href='' class='button2'> Hapus</a>
+          </div>
+          <div class='bottom'>
+            <h3>{$value['judul']}</h3>
+            <h4>Participant: {$value['participant']}</h4>
+          </div>
+          <h3 style='margin: 5px;' >{$value['kode']}</h3>
+        </div>";
+      }
       ?>
     </div>
   </body>

@@ -43,7 +43,24 @@ function createTableDatabase($conn, $tableName){
   }
   $conn = $connTemp;
 }
-
+/* Get Table Database KP
+mendapatkan semua data yang akan ditampilkan dalam dashboard
+*/
+function getTableDatabase($conn, $tableName){
+  $connTemp = $conn;
+  try {
+    $stmt = $conn->prepare("SELECT judul, kode, participant FROM $tableName");
+    $stmt->execute();
+  
+    // set the resulting array to associative
+    $result = $stmt->fetchAll();
+    $conn = $connTemp;
+    return $result;
+  } catch(PDOException $e) {
+    $conn = $connTemp;
+    echo "Error: " . $e->getMessage();
+  }
+}
 /* 
 menambahkan field data ke tabel user (KP)
 data ini akan berada dalam TableDatabase / database berdasarkan username + id 
@@ -136,11 +153,65 @@ function createTableP($conn, $tableName){
 /* Menambahkan data ke TableP
 */
 function insertTableP(
-  $conn, $pertanyaan, $optiona,$optionb,$optionc,$optiond){
+  $conn, $tableName, $pertanyaan, $optiona,$optionb,$optionc,$optiond){
 
   $connTemp = $conn;
-  
+  try {
+    $sql = "INSERT INTO $tableName (`pertanyaan`, `optiona`, `optionb`, `optionc`, `optiond`) VALUES (\"$pertanyaan\", \"$optiona\", \"$optionb\", \"$optionc\", \"$optiond\")";
+    // use exec() because no results are returned
+    $conn->exec($sql);
+    echo "New record created successfully";
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
   $conn = $connTemp;
+}
+/* Mengambil data dari TableP
+*/
+function getTableP($conn, $tableName){
+  $connTemp = $conn;
+  try {
+    $stmt = $conn->prepare("SELECT pertanyaan, optiona, optionb, optionc, optiond FROM $tableName");
+    $stmt->execute();
+  
+    // set the resulting array to associative
+    $result = $stmt->fetchAll();
+    return $result;
+  } catch(PDOException $e) {
+    echo "Error: " . $e->getMessage();
+  }
+  $conn = $connTemp;
+}
+/* Membuat tabel participant
+*/
+function createParticipantTable($conn, $tableName, $jumlahPertanyaan){
+  $connTemp = $conn;
+  try {
+  
+    // sql to create table
+    $sql = "CREATE TABLE $tableName (
+    userId INT(6) PRIMARY KEY
+    )";
+  
+    // use exec() because no results are returned
+    $conn->exec($sql);
+    echo "Table $tableName created successfully";
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+  $conn = $connTemp;
+
+  try {
+    // sql to create table
+    for ($i=1; $i <= $jumlahPertanyaan; $i++) { 
+      $sql = "ALTER TABLE $tableName ADD pertanyaan$i int(1);";
+      // use exec() because no results are returned
+      $conn->exec($sql);
+    }
+    echo "Table Add successfully";
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
 }
 // check login
 function isLogin(){

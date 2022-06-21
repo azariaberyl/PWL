@@ -1,5 +1,5 @@
 <?php
-include "conf.php";
+include "model/conf.php";
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -15,17 +15,17 @@ include "conf.php";
       <ul>
         <li class="button1"><a href="">Home/Logo</a></li>
         <?php if (isLogin()){
-          echo '<li class="button1"><a href="dashboard.php">Dashboard</a></li>';
+          echo '<li class="button1"><a href="view/dashboard.php">Dashboard</a></li>';
         }?>
       </ul>
       <ul>
         <?php if (isLogin()){ ?>
-          <li class="button1"><a href="logout.php">Logout</a></li>
+          <li class="button1"><a href="controller/logout.php">Logout</a></li>
         <?php
         } else {
           ?>
-          <li class="button1"><a href="login.html">Login</a></li>
-          <li class="button1"><a href="register.html">Register</a></li>
+          <li class="button1"><a href="view/login.html">Login</a></li>
+          <li class="button1"><a href="">Register</a></li>
         <?php }?>
       </ul>
     </nav>
@@ -38,7 +38,7 @@ include "conf.php";
               Masukan kode <br />
               untuk memulai
             </h1>
-            <form action="" method="get">
+            <form action="view/room.php" method="get">
               <input
                 type="search"
                 name="room"

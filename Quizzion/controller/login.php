@@ -1,5 +1,5 @@
 <?php
-include "conf.php";
+include "../model/conf.php";
 $username = post('username');
 $pass = post("pass");
 
@@ -12,7 +12,7 @@ foreach ($data as $key) {
   if ($username == $key['username'] && $pass == $key['pass']){
     $_SESSION["login"] = $key;
     // print_r($_SESSION["login"]);
-    header("location:dashboard.php");
+    header("location:../view/dashboard.php");
   }
 }
 echo "Password salah silahkan kembali ke halaman login";

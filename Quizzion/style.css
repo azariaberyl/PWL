@@ -47,7 +47,7 @@ a {
   background-color: rgb(236, 250, 253);
   cursor: pointer;
 }
-/* Align left button container */
+/* Align right button container */
 .end-container {
   text-align: end;
   background-color: white;
@@ -115,21 +115,21 @@ header {
   color: #21233a;
 }
 /* table overview */
-#table-overview {
+.table-overview {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 10px;
 }
-#table-overview :first-child {
+.table-overview :first-child {
   text-align: end;
 }
-#table-overview #bottom {
+.table-overview .bottom {
   padding: 10px 5px;
   display: flex;
   justify-content: space-between;
 }
-#table-overview #bottom h4 {
+.table-overview .bottom h4 {
   font-size: larger;
   color: #21233abe;
 }
@@ -199,4 +199,21 @@ header {
 }
 .login-container form div * {
   flex-grow: 1;
+}
+/* Kode Proses.php */
+.kode-judul {
+  margin: 10px;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+.kode-pilihan {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.kode-pilihan label {
+  font-size: 1.1em;
+  width: 100%;
+  padding: 10px;
 }

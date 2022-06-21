@@ -1,6 +1,5 @@
 <?php
-include 'conf.php';
-$jmlPertanyaan = 1;
+include '../model/conf.php';
 if (isLogin()){
 ?>
 <!DOCTYPE html>
@@ -9,24 +8,24 @@ if (isLogin()){
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../style.css" />
   <title>Quizion</title>
 </head>
 <body style="background-color: #f7f9fa">
   <nav style="background-color: white">
     <ul>
-      <li class="button1"><a href="index.php">Home/Logo</a></li>
+      <li class="button1"><a href="../index.php">Home</a></li>
       <li class="button1"><a href="dashboard.php">Dashboard</a></li>
     </ul>
     <ul>
-      <li class="button1"><a href="logout.php">Logout</a></li>
+      <li class="button1"><a href="../controller/logout.php">Logout</a></li>
     </ul>
   </nav>
 
   <div class="container" style="width: 85%">
     <!-- Form -->
     <div class="question-container">
-      <form action="form-create-proses.php" method="post">
+      <form action="../controller/form-create-proses.php" method="post">
         <!-- Judul -->
         <h1 class="judul">Judul</h1>
         <input
