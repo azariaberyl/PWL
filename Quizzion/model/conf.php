@@ -79,25 +79,6 @@ function insertTable($conn, $tableDatabase, $judul, $kode){
   $conn = $connTemp;
 }
 
-/*
-Mendapatkan field data tabel user (kumpulan pertanyaan)
-data ini berada dalam TableDatabase / database berdasarkan username + id
-*/
-function getTableUser($conn, $tableDatabase){
-  $connTemp = $conn;
-  try {
-    $stmt = $conn->prepare("SELECT * FROM $tableDatabase");
-    $stmt->execute();
-  
-    // set the resulting array to associative
-    $result = $stmt->fetchAll();
-    $conn = $connTemp;
-    return $result;
-  } catch(PDOException $e) {
-    $conn = $connTemp;
-    echo "Error: " . $e->getMessage();
-  }
-}
 
 /* menghapus field tabel user (KP)
 data ini berada dalam TableDatabase / database berdasarkan username + id
@@ -212,6 +193,31 @@ function createParticipantTable($conn, $tableName, $jumlahPertanyaan){
   } catch(PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();
   }
+}
+/* Menyimpan jawaban user
+ketika user mengklik submit maka akan menambah field di participantTable
+dan menganti value user participant+1
+*/
+function saveUserAnswer(
+  $conn, $tableParticipant, $columns, $userId, $value, $tableUser, $participant){
+  $connTemp = $conn;
+  try {
+    $sql = "INSERT INTO $tableParticipant (userId, $columns) VALUES ($userId, $value)";
+    // use exec() because no results are returned
+    $conn->exec($sql);
+
+    $sql1 = "UPDATE $tableUser SET participant=$participant WHERE id=$userId";
+
+    // Prepare statement
+    $stmt = $conn->prepare($sql1);
+    // execute the query
+    $stmt->execute();
+    echo "New record created successfully";
+  } catch(PDOException $e) {
+    echo "Gagal mengirim jawaban";
+  }
+  
+  $conn = $connTemp;
 }
 // check login
 function isLogin(){

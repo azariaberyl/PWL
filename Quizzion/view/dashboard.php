@@ -11,8 +11,6 @@ if (isset($_SESSION["login"])){
   } else {
     $datas = getTableDatabase($conn, $userTablDatabase);
   }
-  $userTableDatas = getTableUser($conn, $userTablDatabase);
-  // print_r($userTableDatas);
 ?>
 
 <!DOCTYPE html>

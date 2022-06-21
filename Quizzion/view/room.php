@@ -4,7 +4,18 @@ if(isLogin()){
 $tableName = get("room");
 $pertanyaans = getTableP($conn, $tableName);
 // print_r($pertanyaans);
+$userTable = getLogin();
+try {
+  $connTemp = $conn;
+  $stmt = $conn->prepare("SELECT judul, participant FROM $userTable WHERE kode=\"$tableName\"");
+  $stmt->execute();
 
+  // set the resulting array to associative
+  $user = $stmt->fetch();
+  $conn = $connTemp;
+} catch(PDOException $e) {
+  echo "Error: " . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +52,9 @@ $pertanyaans = getTableP($conn, $tableName);
   <div class="question-container">
     <form action="../controller/room-submit.php" method="post">
       <!-- Judul -->
-      <h1 class="judul">Judul</h1>
+      <h1 class="judul"><?php echo $user['judul']?></h1>
+      <input type="hidden" name="participant" value= "<?php echo $user['participant']?>">
+      <input type="hidden" name="kode" value= "<?php echo $tableName?>">
 
       <!-- Question -->
       <?php
@@ -54,7 +67,7 @@ $pertanyaans = getTableP($conn, $tableName);
         <div class="kode-pilihan">
           <input 
           type="radio" 
-          name="pilihan<?php echo $key ?>" 
+          name="pertanyaan<?php echo $key+1 ?>" 
           id="0<?php echo $key ?>" 
           value="0" />
           <label for="0<?php echo $key ?>"><?php echo $value[1] ?></label>
@@ -62,7 +75,7 @@ $pertanyaans = getTableP($conn, $tableName);
         <div class="kode-pilihan">
           <input 
           type="radio" 
-          name="pilihan<?php echo $key ?>" 
+          name="pertanyaan<?php echo $key+1 ?>" 
           id="1<?php echo $key ?>" 
           value="1" />
           <label for="1<?php echo $key ?>"><?php echo $value[2] ?></label>
@@ -70,7 +83,7 @@ $pertanyaans = getTableP($conn, $tableName);
         <div class="kode-pilihan">
           <input 
           type="radio" 
-          name="pilihan<?php echo $key ?>" 
+          name="pertanyaan<?php echo $key+1 ?>" 
           id="2<?php echo $key ?>" 
           value="2" />
           <label for="2<?php echo $key ?>"><?php echo $value[3] ?></label>
@@ -78,7 +91,7 @@ $pertanyaans = getTableP($conn, $tableName);
         <div class="kode-pilihan">
           <input 
           type="radio" 
-          name="pilihan<?php echo $key ?>" 
+          name="pertanyaan<?php echo $key+1 ?>" 
           id="3<?php echo $key ?>" 
           value="3" />
           <label for="3<?php echo $key ?>"><?php echo $value[4] ?></label>
