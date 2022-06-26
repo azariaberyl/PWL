@@ -8,9 +8,8 @@ if (isset($_SESSION["login"])){
   if (!tableExists($conn, $userTablDatabase)){
     echo "Table telah dibuat";
     createTableDatabase($conn, $userTablDatabase);
-  } else {
-    $datas = getTableDatabase($conn, $userTablDatabase);
   }
+  $datas = getTableDatabase($conn, $userTablDatabase);
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +48,7 @@ if (isset($_SESSION["login"])){
         echo "<div class='table-overview'>
           <div>
             <a href='' class='button2'> Edit</a>
-            <a href='' class='button2'> Hapus</a>
+            <a href=\"../controller/hapus.php?id={$value['id']}\" class='button2'> Hapus</a>
           </div>
           <div class='bottom'>
             <h3>{$value['judul']}</h3>

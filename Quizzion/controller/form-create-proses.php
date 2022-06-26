@@ -6,7 +6,7 @@ judul, participant = 0, kode = user+userId+rand()
 */
 $rand=rand();
 $user = getLogin();
-$kode = "$user$rand";
+$kode = "{$_SESSION['login']['id']}x$rand";
 $judul = post('title');
 echo "$judul, $kode";
 $post = $_POST;

@@ -4,7 +4,11 @@ if(isLogin()){
 $tableName = get("room");
 $pertanyaans = getTableP($conn, $tableName);
 // print_r($pertanyaans);
-$userTable = getLogin();
+// print_r($tableName);
+// print_r($pertanyaans);
+/* Mengambil database pembuat pertanyaan */
+$userTable = getUserById($conn, explode("x",$tableName)[0]);
+/* Mengambil judul dan participant */
 try {
   $connTemp = $conn;
   $stmt = $conn->prepare("SELECT judul, participant FROM $userTable WHERE kode=\"$tableName\"");
@@ -30,7 +34,7 @@ try {
 <body style="background-color: #f7f9fa">
 <nav style="background-color: white">
   <ul>
-    <li class="button1"><a href="index.php">Home</a></li>
+    <li class="button1"><a href="../index.php">Home</a></li>
     <?php if (isLogin()){
   echo '<li class="button1"><a href="dashboard.php">Dashboard</a></li>';
     }?>

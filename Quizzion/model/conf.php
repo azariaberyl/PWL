@@ -49,7 +49,7 @@ mendapatkan semua data yang akan ditampilkan dalam dashboard
 function getTableDatabase($conn, $tableName){
   $connTemp = $conn;
   try {
-    $stmt = $conn->prepare("SELECT judul, kode, participant FROM $tableName");
+    $stmt = $conn->prepare("SELECT id, judul, kode, participant FROM $tableName");
     $stmt->execute();
   
     // set the resulting array to associative
@@ -83,15 +83,29 @@ function insertTable($conn, $tableDatabase, $judul, $kode){
 /* menghapus field tabel user (KP)
 data ini berada dalam TableDatabase / database berdasarkan username + id
 */
-function delTable($conn, $tableDatabase, $id){
+function delTable($con, $tableName, $id){
+  /* Mengambil kode dari data yang ingin dihapus */
+  try {
+    $conn = $con;
+    $stmt = $conn->prepare("SELECT kode FROM $tableName WHERE id=\"$id\"");
+    $stmt->execute();
+    
+    // set the resulting array to associative
+    $result = $stmt->fetch();
+    $kode = $result[0];
+    // print_r($kode);
+  } catch (PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+
   /* Akan menghapus sebuah tabel user (KP)
   Maka akan menghapus juga database KP
-  yaitu yang berasal dari namaTable dalam TableDatabase / database berdasarkan username + id
+  yaitu yang berasal dari namaTable dalam TableName / database berdasarkan username + id
   */
   try {
-    $connTemp = $conn;
-    // sql to delete a record
-    $sql = "DELETE FROM $tableDatabase WHERE id=$id";
+    $conn = $con;
+    /* Menghapus row di KP */
+    $sql = "DELETE FROM $tableName WHERE kode=\"$kode\"";
   
     // use exec() because no results are returned
     $conn->exec($sql);
@@ -99,10 +113,18 @@ function delTable($conn, $tableDatabase, $id){
   } catch(PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();
   }
-  $conn = $connTemp;
-  /* Tambahkan kode untuk menghapus database table user (KP).
-  database KP menyimpan semua pertanyaan2
+
+  /* Drop table yang berkaitan dengan KP
+  table participant dan table pertanyaans
   */
+  try {
+    $conn = $con;
+    /* Drop table */
+    $sql = "DROP TABLE `$kode`, `p$kode`";
+    $conn->exec($sql);
+  } catch (PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
 }
 /* 
 Membuat tabel pertanyaan berasal dari kode
@@ -199,25 +221,37 @@ ketika user mengklik submit maka akan menambah field di participantTable
 dan menganti value user participant+1
 */
 function saveUserAnswer(
-  $conn, $tableParticipant, $columns, $userId, $value, $tableUser, $participant){
+  $conn, $tableParticipant, $columns, $userId, $value, $tableUser, $participant, $kode){
   $connTemp = $conn;
   try {
     $sql = "INSERT INTO $tableParticipant (userId, $columns) VALUES ($userId, $value)";
     // use exec() because no results are returned
     $conn->exec($sql);
 
-    $sql1 = "UPDATE $tableUser SET participant=$participant WHERE id=$userId";
-
+    $sql1 = "UPDATE $tableUser SET participant=$participant WHERE kode=\"$kode\"";
+    // print_r($sql1);
     // Prepare statement
     $stmt = $conn->prepare($sql1);
     // execute the query
     $stmt->execute();
     echo "New record created successfully";
   } catch(PDOException $e) {
-    echo "Gagal mengirim jawaban";
+    echo "$e";
   }
   
   $conn = $connTemp;
+}
+/* Mendapatkan user berdasarkan id
+returnnya user+userid
+*/
+function getUserById($con, $id){
+  $conn = $con;
+
+  $stmt = $conn->prepare("SELECT id, username FROM users WHERE id=$id");
+  $stmt->execute();
+  $result = $stmt->fetch();
+  $data = "{$result['username']}{$result['id']}";
+  return $data;
 }
 // check login
 function isLogin(){
