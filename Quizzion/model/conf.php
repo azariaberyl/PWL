@@ -61,6 +61,26 @@ function getTableDatabase($conn, $tableName){
     echo "Error: " . $e->getMessage();
   }
 }
+
+/* Get single row from KP
+mendapatkan 1 baris data yang berada dalam KP / Dashboard
+berdasarkan where id = $id
+*/
+function getSingleTableDatabase($con, $tableName, $id){
+  $conn = $con;
+  try {
+    $stmt = $conn->prepare("SELECT kode, judul FROM $tableName WHERE id=\"$id\"");
+    $stmt->execute();
+  
+    // set the resulting array to associative
+    $result = $stmt->fetch();
+    return $result;
+  } catch(PDOException $e) {
+    $conn = $connTemp;
+    echo "Error: " . $e->getMessage();
+  }
+}
+
 /* 
 menambahkan field data ke tabel user (KP)
 data ini akan berada dalam TableDatabase / database berdasarkan username + id 

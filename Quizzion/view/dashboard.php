@@ -47,7 +47,7 @@ if (isset($_SESSION["login"])){
       foreach ($datas as $key => $value) {
         echo "<div class='table-overview'>
           <div>
-            <a href='' class='button2'> Edit</a>
+            <a href=\"edit-form.php?id={$value['id']}\" class='button2'> Edit</a>
             <a href=\"../controller/hapus.php?id={$value['id']}\" class='button2'> Hapus</a>
           </div>
           <div class='bottom'>
