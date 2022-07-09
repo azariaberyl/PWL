@@ -61,7 +61,6 @@ function getTableDatabase($conn, $tableName){
     echo "Error: " . $e->getMessage();
   }
 }
-
 /* Get single row from KP
 mendapatkan 1 baris data yang berada dalam KP / Dashboard
 berdasarkan where id = $id
@@ -80,7 +79,6 @@ function getSingleTableDatabase($con, $tableName, $id){
     echo "Error: " . $e->getMessage();
   }
 }
-
 /* 
 menambahkan field data ke tabel user (KP)
 data ini akan berada dalam TableDatabase / database berdasarkan username + id 
@@ -159,6 +157,9 @@ function delTable($con, $tableName, $id){
     echo $sql . "<br>" . $e->getMessage();
   }
 }
+
+// TableP
+
 /* 
 Membuat tabel pertanyaan berasal dari kode
 tableName berasal dari kode
@@ -232,8 +233,31 @@ function delTableP($con, $tableName, $id){
     echo $sql . "<br>" . $e->getMessage();
   }
 }
-/* Membuat tabel participant
-*/
+/* Update TableP */
+function updateTableP(
+  $con, $tableName, $id, $pertanyaan, $optiona, $optionb, $optionc, $optiond){
+  $conn = $con;
+
+  try {
+    $sql = "UPDATE $tableName SET 
+    `pertanyaan`=\"$pertanyaan\",
+    `optiona`   =\"$optiona\",
+    `optionb`   =\"$optionb\",
+    `optionc`   =\"$optionc\",
+    `optiond`   =\"$optiond\"
+    WHERE 
+    id=\"$id\"";
+    // use exec() because no results are returned
+    $conn->exec($sql);
+    echo "Berhasil update row";
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+}
+
+// TableParticipant
+
+/* Membuat tabel participant*/
 function createParticipantTable($conn, $tableName, $jumlahPertanyaan){
   $connTemp = $conn;
   try {
@@ -302,6 +326,8 @@ function saveUserAnswer(
   
   $conn = $connTemp;
 }
+
+
 /* Mendapatkan user berdasarkan id
 returnnya user+userid
 */

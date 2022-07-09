@@ -36,18 +36,48 @@ echo $tableName;
 /* Hapus data pertanyaan dari tabel p 
 $deleted adalah array dari id yang akan dihapus
 */
-$deleted = $data[$key[count($data)-2]];
-print_r($deleted);
-foreach ($deleted as $key => $value) {
-  delTableP($conn, $tableName, $value);
-  delParticipantTable($conn, "p$tableName", $value);
-  echo "Berhasil menghapus id: $value";
+if (isset($data["deleted"])){
+  $deleted = $data["deleted"];
+  print_r($deleted);
+  // foreach ($deleted as $key => $value) {
+  //   delTableP($conn, $tableName, $value);
+  //   delParticipantTable($conn, "p$tableName", $value);
+  //   echo "Berhasil menghapus id: $value";
+  // }
+}
+/* Update data 
+Update di TableP
+*/
+for ($i=1; $i < count($data)-2; $i+=6) {
+  $id = $data[$key[$i]];
+  $pertanyaan = $data[$key[$i+1]];
+  $optiona = $data[$key[$i+2]];
+  $optionb = $data[$key[$i+3]];
+  $optionc = $data[$key[$i+4]];
+  $optiond = $data[$key[$i+5]];
+
+  $lastId = $data[$key[$i]];
+
+  echo "<br>ID: $id<br>";
+  echo "Pertanyaan: $pertanyaan<br>";
+  echo "A: $optiona<br>";
+  echo "B: $optionb<br>";
+  echo "C: $optionc<br>";
+  echo "D: $optiond<br>";
+  updateTableP($conn, $tableName, $id, $pertanyaan, $optiona, $optionb, $optionc, $optiond);
+  
+  /* Menambahkan data yang sebelumnya belum ada 
+  menambahkan di TableP
+  */
+  if ($data[$key[$i]] == ""){
+    echo "ID Diatas kosong<br>";
+  }
 }
 
-/* Menambahkan data */
 
 
-header("location:../view/dashboard.php");
+// header("location:../view/dashboard.php");
+
 }else {
   echo "Silahkan login";
 }
