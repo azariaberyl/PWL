@@ -38,6 +38,7 @@ if (isLogin()){
         <!-- Question -->
         <div id="question-content">
           <div class="question">
+            <input type="hidden" name="id" value="">
             <div class="end-container">
               <a onClick="deleteQuestion(this)" class="button2">Delete</a>
             </div>

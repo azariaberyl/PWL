@@ -28,6 +28,12 @@ function tambahPertanyaan() {
   const jmlPertanyaan = pertanyaan;
   const elemnt = document.createElement("div");
   elemnt.className = "question";
+  // Create input id
+  const inputID = document.createElement("input");
+  inputID.value = "";
+  inputID.type = "hidden";
+  inputID.name = "id" + pertanyaan;
+  elemnt.appendChild(inputID);
   // Delete Button
   const deleteContainer = div();
   deleteContainer.className = "end-container";
@@ -114,11 +120,18 @@ function tambahPertanyaan() {
   // console.log(elemnt);
 }
 
-function tambahPertanyaan(soal, opsi1, opsi2, opsi3, opsi4) {
-  pertanyaan++;
+function tambahPertanyaane(id, soal, opsi1, opsi2, opsi3, opsi4) {
+  console.log(pertanyaan);
   const jmlPertanyaan = pertanyaan;
   const elemnt = document.createElement("div");
   elemnt.className = "question";
+  elemnt.id = id;
+  // Create input id
+  const inputID = document.createElement("input");
+  inputID.value = id;
+  inputID.type = "hidden";
+  inputID.name = "id" + id;
+  elemnt.appendChild(inputID);
   // Delete Button
   const deleteContainer = div();
   deleteContainer.className = "end-container";
@@ -208,4 +221,23 @@ function tambahPertanyaan(soal, opsi1, opsi2, opsi3, opsi4) {
 
   question.appendChild(elemnt);
   // console.log(elemnt);
+}
+function deleteQuestion(e) {
+  const parent = e.parentElement.parentElement;
+  const id = parent.id;
+  if (id == "") {
+    console.log("Gaada id");
+    parent.remove();
+  } else {
+    const tambah = document.getElementById("tambah");
+    const form = document.getElementById("form");
+    // Tambah data yang didelete
+    const deleted = document.createElement("input");
+    deleted.type = "hidden";
+    deleted.name = `deleted[${id}]`;
+    deleted.value = id;
+    // Append
+    form.insertBefore(deleted, tambah);
+    parent.remove();
+  }
 }

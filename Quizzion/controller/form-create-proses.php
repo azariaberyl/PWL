@@ -16,17 +16,17 @@ try {
   $jumlahPertanyaan=0;
   insertTable($conn, $user, $judul, $kode);
   createTableP($conn, $kode);
-  for ($i=1; $i <= count($post)-2; $i+=5) { 
+  for ($i=1; $i <= count($post)-2; $i+=6) { 
     // echo "<br> Ini array $i";
     $jumlahPertanyaan++;
     $key = array_keys($post);
-    $pertanyaan = $post[$key[$i]];
-    $optiona = $post[$key[$i+1]];
-    $optionb = $post[$key[$i+2]];
-    $optionc = $post[$key[$i+3]];
-    $optiond = $post[$key[$i+4]];
+    $pertanyaan = $post[$key[$i+1]];
+    $optiona = $post[$key[$i+2]];
+    $optionb = $post[$key[$i+3]];
+    $optionc = $post[$key[$i+4]];
+    $optiond = $post[$key[$i+5]];
+    echo "<br> pertanyaan: $pertanyaan <br> opsia: $optiona <br> opsib: $optionb <br> opsic: $optionc <br> opsid: $optiond";
     insertTableP($conn, $kode, $pertanyaan, $optiona, $optionb, $optionc, $optiond);
-    
   }
   createParticipantTable($conn, "p$kode", $jumlahPertanyaan);
   header("location:../view/dashboard.php");

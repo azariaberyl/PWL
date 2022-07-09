@@ -28,7 +28,7 @@ $data = json_encode(getTableP($conn, $tableRow[0]));
 <div class="container" style="width: 85%">
   <!-- Form -->
   <div class="question-container">
-    <form action="../controller/form-create-proses.php" method="post">
+    <form id="form" action="../controller/edit-proses.php?id=<?php echo $id ?>" method="post">
       <!-- Judul -->
       <h1 class="judul">Judul</h1>
       <input
@@ -44,35 +44,14 @@ $data = json_encode(getTableP($conn, $tableRow[0]));
       ?>
       <!-- Question -->
       <div id="question-content">
-        <!-- <div class="question">
-          <div class="end-container">
-            <a onClick="deleteQuestion(this)" class="button2">Delete</a>
-          </div>
-          <input class="title" type="text" name="pertanyaan0" placeholder="Masukan pertanyaan">
-
-          <div class="pilihan">
-            <label for="00">A</label>
-            <input type="text" name="pilihan00" id="00" placeholder="Masukan opsi A" />
-          </div>
-          <div class="pilihan">
-            <label for="10">B</label>
-            <input type="text" name="pilihan10" id="10" placeholder="Masukan opsi B" />
-          </div>
-          <div class="pilihan">
-            <label for="20">C</label>
-            <input type="text" name="pilihan20" id="20" placeholder="Masukan opsi C" />
-          </div>
-          <div class="pilihan">
-            <label for="30">D</label>
-            <input type="text" name="pilihan30" id="30" placeholder="Masukan opsi D" />
-          </div>
-        </div> -->
+        
       </div>
 
       <div id="tambah" class="end-container">
         <a onClick="tambahPertanyaan()" class="button2">Tambah</a>
       </div>
       <div class="end-container" style="background-color: rgba(0, 0, 0, 0)">
+        <a href="dashboard.php" class="button2" style="font-size: 1em; border: none; font-weight: 600">Batalkan</a>
         <input
           type="submit"
           class="button2"
@@ -87,17 +66,16 @@ $data = json_encode(getTableP($conn, $tableRow[0]));
 </div>
 <script src="form-create.js"></script>
 <script>
-  let pertanyaan = 0;
-  function deleteQuestion(e) {
-    const parent = e.parentElement.parentElement;
-    parent.remove();
-  }
   const data = <?php print_r($data) ?>;
+  let pertanyaan = 0;
+
   data.forEach(element => {
-    pertanyaan++;
-    // console.log(element);
-    tambahPertanyaan(element[0], element[1], element[2], element[3], element[4]);
+    pertanyaan = element[0];
+    console.log(element);
+    tambahPertanyaane(element[0],element[1], element[2], element[3], element[4], element[5]);
   });
+  pertanyaan = data.length;
+  // console.log(pertanyaan);
 </script>
 </body>
 <?php } ?>

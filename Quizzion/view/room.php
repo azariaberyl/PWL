@@ -66,7 +66,7 @@ try {
         // print_r($key);
       ?>
       <div class="question" style="overflow:hidden">
-        <div class="kode-judul" ><?php echo $value[0] ?></div>
+        <div class="kode-judul" ><?php echo $value[1] ?></div>
 
         <div class="kode-pilihan">
           <input 
@@ -74,7 +74,7 @@ try {
           name="pertanyaan<?php echo $key+1 ?>" 
           id="0<?php echo $key ?>" 
           value="0" />
-          <label for="0<?php echo $key ?>"><?php echo $value[1] ?></label>
+          <label for="0<?php echo $key ?>"><?php echo $value[2] ?></label>
         </div>
         <div class="kode-pilihan">
           <input 
@@ -82,7 +82,7 @@ try {
           name="pertanyaan<?php echo $key+1 ?>" 
           id="1<?php echo $key ?>" 
           value="1" />
-          <label for="1<?php echo $key ?>"><?php echo $value[2] ?></label>
+          <label for="1<?php echo $key ?>"><?php echo $value[3] ?></label>
         </div>
         <div class="kode-pilihan">
           <input 
@@ -90,7 +90,7 @@ try {
           name="pertanyaan<?php echo $key+1 ?>" 
           id="2<?php echo $key ?>" 
           value="2" />
-          <label for="2<?php echo $key ?>"><?php echo $value[3] ?></label>
+          <label for="2<?php echo $key ?>"><?php echo $value[4] ?></label>
         </div>
         <div class="kode-pilihan">
           <input 
@@ -98,7 +98,7 @@ try {
           name="pertanyaan<?php echo $key+1 ?>" 
           id="3<?php echo $key ?>" 
           value="3" />
-          <label for="3<?php echo $key ?>"><?php echo $value[4] ?></label>
+          <label for="3<?php echo $key ?>"><?php echo $value[5] ?></label>
         </div>
       </div>
       <?php } ?>

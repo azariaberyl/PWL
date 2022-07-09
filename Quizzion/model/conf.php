@@ -69,7 +69,7 @@ berdasarkan where id = $id
 function getSingleTableDatabase($con, $tableName, $id){
   $conn = $con;
   try {
-    $stmt = $conn->prepare("SELECT kode, judul FROM $tableName WHERE id=\"$id\"");
+    $stmt = $conn->prepare("SELECT kode, judul FROM $tableName WHERE id=$id");
     $stmt->execute();
   
     // set the resulting array to associative
@@ -99,6 +99,19 @@ function insertTable($conn, $tableDatabase, $judul, $kode){
   $conn = $connTemp;
 }
 
+/* Edit judul dalam tabel user (KP) */
+function editJudul($con, $tableName, $judul, $id){
+  $conn = $con;
+
+  try {
+    $sql = "UPDATE $tableName SET judul=\"$judul\" WHERE id=\"$id\"";
+    // use exec() because no results are returned
+    $conn->exec($sql);
+    echo "Berhasil update judul";
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+}
 
 /* menghapus field tabel user (KP)
 data ini berada dalam TableDatabase / database berdasarkan username + id
@@ -194,7 +207,7 @@ function insertTableP(
 function getTableP($conn, $tableName){
   $connTemp = $conn;
   try {
-    $stmt = $conn->prepare("SELECT pertanyaan, optiona, optionb, optionc, optiond FROM $tableName");
+    $stmt = $conn->prepare("SELECT * FROM $tableName");
     $stmt->execute();
   
     // set the resulting array to associative
@@ -204,6 +217,20 @@ function getTableP($conn, $tableName){
     echo "Error: " . $e->getMessage();
   }
   $conn = $connTemp;
+}
+/* Menghapus isi tabelP */
+function delTableP($con, $tableName, $id){
+  $conn = $con;
+  try {
+    // sql to delete a record
+    $sql = "DELETE FROM $tableName WHERE id=$id";
+  
+    // use exec() because no results are returned
+    $conn->exec($sql);
+    echo "Record deleted successfully";
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
 }
 /* Membuat tabel participant
 */
@@ -232,6 +259,20 @@ function createParticipantTable($conn, $tableName, $jumlahPertanyaan){
       $conn->exec($sql);
     }
     echo "Table Add successfully";
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+}
+/* Delete column dari Table Participant */
+function delParticipantTable($con, $tableName, $id){
+  $conn = $con;
+  try {
+    // sql to delete a record
+    $sql = "ALTER TABLE $tableName DROP pertanyaan$id";
+  
+    // use exec() because no results are returned
+    $conn->exec($sql);
+    echo "Column deleted successfully";
   } catch(PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();
   }
@@ -281,12 +322,15 @@ function isLogin(){
     return false;
   }
 }
-
-// Connection to database
-$engi = "mysql";
-$host = "localhost";
-$dbse = "quizion";
-$user = "root";
-$pass = "";
-$conn = new PDO("$engi:dbname=$dbse;host=$host", $user,$pass);
+try {
+  // Connection to database
+  $engi = "mysql";
+  $host = "localhost";
+  $dbse = "quizion";
+  $user = "root";
+  $pass = "";
+  $conn = new PDO("$engi:dbname=$dbse;host=$host", $user,$pass);
+} catch (\Throwable $th) {
+  echo "Terjadi error pada databse";
+}
 ?>
