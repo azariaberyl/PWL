@@ -6,7 +6,7 @@ if (isset($_SESSION["login"])){
   $userTablDatabase = getLogin();
   // print_r($userTablDatabase);
   if (!tableExists($conn, $userTablDatabase)){
-    echo "Table telah dibuat";
+    // echo "Table telah dibuat";
     createTableDatabase($conn, $userTablDatabase);
   }
   $datas = getTableDatabase($conn, $userTablDatabase);
@@ -52,7 +52,7 @@ if (isset($_SESSION["login"])){
           </div>
           <div class='bottom'>
             <h3>{$value['judul']}</h3>
-            <h4>Participant: {$value['participant']}</h4>
+            <h4><a href=participant.php?id={$value['id']}>Participant: {$value['participant']}</a></h4>
           </div>
           <h3 style='margin: 5px;' >{$value['kode']}</h3>
         </div>";

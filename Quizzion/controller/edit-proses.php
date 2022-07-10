@@ -1,6 +1,8 @@
 <?php
 include "../model/conf.php";
 if(isLogin()){
+try {
+
 
 /* Id dari data yang mau dihapus */
 $id = get('id');
@@ -21,7 +23,9 @@ digunakan untuk menambah data pada tabel participant agar pertanyaan dan id sama
 pertanyaan$lastId+1
 0 sebagai nilai awal
 */
-$lastId = 0;
+$lastId = getTableP($conn, getSingleTableDatabase($conn, getLogin(), $id)[0]);
+$lastId = $lastId[count($lastId)-1]["id"];
+echo "<br>Last id: $lastId<br>";
 
 /* Edit judulnya */
 $judul = $data['title'];
@@ -33,22 +37,15 @@ table yang berdasarkan kode / sebuah pertanyaan2 / tableP
 $tableName= getSingleTableDatabase($conn, $user, $id)[0];
 echo $tableName;
 
-/* Hapus data pertanyaan dari tabel p 
-$deleted adalah array dari id yang akan dihapus
-*/
-if (isset($data["deleted"])){
-  $deleted = $data["deleted"];
-  print_r($deleted);
-  // foreach ($deleted as $key => $value) {
-  //   delTableP($conn, $tableName, $value);
-  //   delParticipantTable($conn, "p$tableName", $value);
-  //   echo "Berhasil menghapus id: $value";
-  // }
-}
+/* Batasan loop */
+$batasan = count($data)-3;
+
+
+
 /* Update data 
 Update di TableP
 */
-for ($i=1; $i < count($data)-2; $i+=6) {
+for ($i=1; $i < $batasan; $i+=6) {
   $id = $data[$key[$i]];
   $pertanyaan = $data[$key[$i+1]];
   $optiona = $data[$key[$i+2]];
@@ -56,27 +53,49 @@ for ($i=1; $i < count($data)-2; $i+=6) {
   $optionc = $data[$key[$i+4]];
   $optiond = $data[$key[$i+5]];
 
-  $lastId = $data[$key[$i]];
+  if($id != ""){
+    
+    echo "<br>ID: $id<br>";
+    echo "Pertanyaan: $pertanyaan<br>";
+    echo "A: $optiona<br>";
+    echo "B: $optionb<br>";
+    echo "C: $optionc<br>";
+    echo "D: $optiond<br>";
+    updateTableP($conn, $tableName, $id, $pertanyaan, $optiona, $optionb, $optionc, $optiond);
+  } 
 
-  echo "<br>ID: $id<br>";
-  echo "Pertanyaan: $pertanyaan<br>";
-  echo "A: $optiona<br>";
-  echo "B: $optionb<br>";
-  echo "C: $optionc<br>";
-  echo "D: $optiond<br>";
-  updateTableP($conn, $tableName, $id, $pertanyaan, $optiona, $optionb, $optionc, $optiond);
-  
   /* Menambahkan data yang sebelumnya belum ada 
   menambahkan di TableP
   */
-  if ($data[$key[$i]] == ""){
-    echo "ID Diatas kosong<br>";
+  elseif ($data[$key[$i]] == "") {
+    $lastId++;
+    echo "<br>ID: $lastId<br>";
+    echo "Pertanyaan: $pertanyaan<br>";
+    echo "A: $optiona<br>";
+    echo "B: $optionb<br>";
+    echo "C: $optionc<br>";
+    echo "D: $optiond<br>";
+    echo "ID Diatas kosong<br> ID terakhir adalah ". $lastId-1 . "<br>";
+    insertTableP($conn, $tableName, $pertanyaan, $optiona, $optionb, $optionc, $optiond);
+    updateColTableParticipant($conn, $tableName, $lastId);
   }
 }
 
-
-
-// header("location:../view/dashboard.php");
+/* Hapus data pertanyaan dari tabel p 
+$deleted adalah array dari id yang akan dihapus
+*/
+if (isset($data["deleted"])){
+  $deleted = $data["deleted"];
+  print_r($deleted);
+  foreach ($deleted as $key => $value) {
+    delTableP($conn, $tableName, $value);
+    delParticipantTable($conn, "p$tableName", $value);
+    echo "Berhasil menghapus id: $value";
+  }
+}
+} finally{
+  header("location:../view/dashboard.php");
+}
 
 }else {
   echo "Silahkan login";

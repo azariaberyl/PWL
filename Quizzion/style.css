@@ -217,3 +217,14 @@ header {
   width: 100%;
   padding: 10px;
 }
+/* Participant */
+.participant {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px;
+}
+.participant > a {
+  font-size: 1.2rem;
+  font-weight: 500;
+}

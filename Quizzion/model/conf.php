@@ -215,7 +215,7 @@ function getTableP($conn, $tableName){
     $result = $stmt->fetchAll();
     return $result;
   } catch(PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    echo "Error: Data tidak ditemukan";
   }
   $conn = $connTemp;
 }
@@ -325,6 +325,20 @@ function saveUserAnswer(
   }
   
   $conn = $connTemp;
+}
+/* Menambah column tabel participant */
+function updateColTableParticipant($con, $tableName, $id){
+  $conn = $con;
+  try {
+    // sql to delete a record
+    $sql = "ALTER TABLE p$tableName ADD pertanyaan$id int(1)";
+  
+    // use exec() because no results are returned
+    $conn->exec($sql);
+    echo "Column add successfully";
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
 }
 
 
