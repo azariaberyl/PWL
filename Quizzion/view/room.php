@@ -71,7 +71,7 @@ try {
         <div class="kode-pilihan">
           <input 
           type="radio" 
-          name="pertanyaan<?php echo $key+1 ?>" 
+          name="pertanyaan<?php echo $value[0] ?>" 
           id="0<?php echo $key ?>" 
           value="0" />
           <label for="0<?php echo $key ?>"><?php echo $value[2] ?></label>
@@ -79,7 +79,7 @@ try {
         <div class="kode-pilihan">
           <input 
           type="radio" 
-          name="pertanyaan<?php echo $key+1 ?>" 
+          name="pertanyaan<?php echo $value[0] ?>" 
           id="1<?php echo $key ?>" 
           value="1" />
           <label for="1<?php echo $key ?>"><?php echo $value[3] ?></label>
@@ -87,7 +87,7 @@ try {
         <div class="kode-pilihan">
           <input 
           type="radio" 
-          name="pertanyaan<?php echo $key+1 ?>" 
+          name="pertanyaan<?php echo $value[0] ?>" 
           id="2<?php echo $key ?>" 
           value="2" />
           <label for="2<?php echo $key ?>"><?php echo $value[4] ?></label>
@@ -95,7 +95,7 @@ try {
         <div class="kode-pilihan">
           <input 
           type="radio" 
-          name="pertanyaan<?php echo $key+1 ?>" 
+          name="pertanyaan<?php echo $value[0] ?>" 
           id="3<?php echo $key ?>" 
           value="3" />
           <label for="3<?php echo $key ?>"><?php echo $value[5] ?></label>

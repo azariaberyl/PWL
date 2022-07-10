@@ -2,7 +2,8 @@
 include "../model/conf.php";
 if (isLogin()){
 
-
+$tableName = get("p");
+$data = getParticipant($conn, $tableName);
 
 ?>
 
@@ -27,9 +28,16 @@ if (isLogin()){
     </nav>
 
     <div class="container" style="width: 85%">
-      <div class="participant">
-        <a href="participant-view.php?">Jane</a>
-      </div>
+      <?php foreach ($data as $key => $value) { 
+        $user = getDataUserById($conn, $value["userId"]);
+        // print_r($user);
+      ?>
+        <div class="participant">
+          <a 
+          href="participant-view.php?p=<?php echo $tableName?>&id=<?php echo $value['userId'] ?>">
+          <?php echo $user['username']?></a>
+        </div>
+      <?php } ?>
     </div>
   </body>
 </html>

@@ -340,7 +340,35 @@ function updateColTableParticipant($con, $tableName, $id){
     echo $sql . "<br>" . $e->getMessage();
   }
 }
-
+/* Mendapatkan data participant */
+function getParticipant($con, $tableName){
+  $conn = $con;
+  try {
+    // sql to delete a record
+    $stmt = $conn->prepare("SELECT * FROM p$tableName");
+    $stmt->execute();
+  
+    // set the resulting array to associative
+    $result = $stmt->fetchAll();
+    return $result;
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+}
+function getParticipantById($con, $tableName, $id){
+  $conn = $con;
+  try {
+    // sql to delete a record
+    $stmt = $conn->prepare("SELECT * FROM p$tableName WHERE userId = $id");
+    $stmt->execute();
+  
+    // set the resulting array to associative
+    $result = $stmt->fetch();
+    return $result;
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+}
 
 /* Mendapatkan user berdasarkan id
 returnnya user+userid
@@ -354,6 +382,15 @@ function getUserById($con, $id){
   $data = "{$result['username']}{$result['id']}";
   return $data;
 }
+function getDataUserById($con, $id){
+  $conn = $con;
+
+  $stmt = $conn->prepare("SELECT id, username FROM users WHERE id=$id");
+  $stmt->execute();
+  $result = $stmt->fetch();
+  return $result;
+}
+
 // check login
 function isLogin(){
   if (isset($_SESSION["login"])) {

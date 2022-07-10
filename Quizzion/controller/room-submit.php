@@ -14,14 +14,15 @@ $id = explode("x", $kode)[0];
 /* Menagmbil id dari penjawab pertanyaan */
 $userId = $_SESSION['login']['id'];
 
-// echo "<br>";
-// echo implode("', '", $columns);
-// echo "<br>";
-// echo implode(", ", $value);
-// echo "<br>";
-// echo $participant;
-// echo "<br>";
-// echo $userId;
+print_r($post);
+echo "<br>";
+echo implode("', '", $columns);
+echo "<br>";
+echo implode(", ", $value);
+echo "<br>";
+echo $participant;
+echo "<br>";
+echo $userId;
 saveUserAnswer(
   $conn, "p$kode", implode(", ", $columns), $userId, implode(", ", $value), getUserById($conn, $id), $participant, $kode
 );

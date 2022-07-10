@@ -25,7 +25,7 @@ include "model/conf.php";
         } else {
           ?>
           <li class="button1"><a href="view/login.html">Login</a></li>
-          <li class="button1"><a href="">Register</a></li>
+          <li class="button1"><a href="view/register.html">Register</a></li>
         <?php }?>
       </ul>
     </nav>

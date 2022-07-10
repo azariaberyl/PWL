@@ -52,7 +52,7 @@ if (isset($_SESSION["login"])){
           </div>
           <div class='bottom'>
             <h3>{$value['judul']}</h3>
-            <h4><a href=participant.php?id={$value['id']}>Participant: {$value['participant']}</a></h4>
+            <h4><a href=participant.php?p={$value['kode']}>Participant: {$value['participant']}</a></h4>
           </div>
           <h3 style='margin: 5px;' >{$value['kode']}</h3>
         </div>";

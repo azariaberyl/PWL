@@ -2,6 +2,27 @@
 include "../model/conf.php";
 if(isLogin()){
 
+$tableName = get('p');
+$id = get('id');
+$pertanyaans = getTableP($conn, $tableName);
+$participant = getParticipantById($conn, $tableName, $id);
+// print_r($participant);
+
+/* Mengambil database pembuat pertanyaan */
+$userTable = getUserById($conn, explode("x",$tableName)[0]);
+/* Mengambil judul dan participant */
+try {
+  $connTemp = $conn;
+  $stmt = $conn->prepare("SELECT judul, participant FROM $userTable WHERE kode=\"$tableName\"");
+  $stmt->execute();
+
+  // set the resulting array to associative
+  $user = $stmt->fetch();
+  $conn = $connTemp;
+} catch(PDOException $e) {
+  echo "Error: " . $e->getMessage();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +66,24 @@ if(isLogin()){
       <!-- Question -->
       <?php
       foreach ($pertanyaans as $key => $value) {
-        // print_r($key);
+        $checkeda = "";
+        $checkedb = "";
+        $checkedc = "";
+        $checkedd = "";
+        switch ($participant["pertanyaan{$value['id']}"]) {
+          case 0:
+            $checkeda = "checked";
+            break;
+          case 1:
+            $checkedb = "checked";
+            break;
+          case 2:
+            $checkedc = "checked";
+            break;
+          case 3:
+            $checkedd = "checked";
+            break;
+        }
       ?>
       <div class="question" style="overflow:hidden">
         <div class="kode-judul" ><?php echo $value[1] ?></div>
@@ -55,7 +93,10 @@ if(isLogin()){
           type="radio" 
           name="pertanyaan<?php echo $key+1 ?>" 
           id="0<?php echo $key ?>" 
-          value="0" />
+          value="0" 
+          disabled
+          <?php echo $checkeda ?>
+          />
           <label for="0<?php echo $key ?>"><?php echo $value[2] ?></label>
         </div>
         <div class="kode-pilihan">
@@ -63,7 +104,10 @@ if(isLogin()){
           type="radio" 
           name="pertanyaan<?php echo $key+1 ?>" 
           id="1<?php echo $key ?>" 
-          value="1" />
+          value="1" 
+          disabled
+          <?php echo $checkedb ?>
+          />
           <label for="1<?php echo $key ?>"><?php echo $value[3] ?></label>
         </div>
         <div class="kode-pilihan">
@@ -71,7 +115,10 @@ if(isLogin()){
           type="radio" 
           name="pertanyaan<?php echo $key+1 ?>" 
           id="2<?php echo $key ?>" 
-          value="2" />
+          value="2" 
+          disabled
+          <?php echo $checkedc ?>
+          />
           <label for="2<?php echo $key ?>"><?php echo $value[4] ?></label>
         </div>
         <div class="kode-pilihan">
@@ -79,7 +126,10 @@ if(isLogin()){
           type="radio" 
           name="pertanyaan<?php echo $key+1 ?>" 
           id="3<?php echo $key ?>" 
-          value="3" />
+          value="3" 
+          disabled
+          <?php echo $checkedd ?>
+          />
           <label for="3<?php echo $key ?>"><?php echo $value[5] ?></label>
         </div>
       </div>
