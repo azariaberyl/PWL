@@ -403,9 +403,9 @@ try {
   // Connection to database
   $engi = "mysql";
   $host = "localhost";
-  $dbse = "quizion";
-  $user = "root";
-  $pass = "";
+  $dbse = "sql6505152";
+  $user = "sql6505152";
+  $pass = "GhK8Vrn8Sa";
   $conn = new PDO("$engi:dbname=$dbse;host=$host", $user,$pass);
 } catch (\Throwable $th) {
   echo "Terjadi error pada databse";
